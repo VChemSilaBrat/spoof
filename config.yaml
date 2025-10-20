@@ -1,0 +1,28 @@
+defaults:
+  - _self_
+
+# Model configuration
+model:
+  _target_: src.model.lightcnn_original.LightCNNOriginal
+  input_shape: [1, 863, 600]
+  num_classes: 2
+  dropout_prob: 0.75
+
+# Training configuration
+training:
+  epochs: 16
+  batch_size: 16
+  num_workers: 4
+  learning_rate: 0.0005
+  scheduler_gamma: 0.98
+
+# Dataset paths
+paths:
+  dataset_path: "LA"
+  train_protocol: "LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.train.trn.txt"
+  dev_protocol: "LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.dev.trl.txt"
+  eval_protocol: "LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.eval.trl.txt"
+
+# Other settings
+seed: 42
+save_dir: "saved"
