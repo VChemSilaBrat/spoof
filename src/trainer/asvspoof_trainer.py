@@ -1,5 +1,6 @@
 import torch
 from tqdm import tqdm
+from .evaluator import ASVspoofEvaluator
 
 
 class ASVspoofTrainer:
@@ -16,6 +17,7 @@ class ASVspoofTrainer:
         self.device = device
         self.config = config
         
+        self.evaluator = ASVspoofEvaluator(device)
         self.best_eer = float('inf')
         self.epoch = 0
     
@@ -67,6 +69,16 @@ class ASVspoofTrainer:
             # Train
             train_loss, train_acc = self.train_epoch()
             print(f"Epoch {self.epoch}: Loss={train_loss:.4f}, Acc={train_acc:.2f}%")
+            
+            # Evaluate
+            if self.eval_loader:
+                eval_eer, _ = self.evaluator.evaluate(self.model, self.eval_loader)
+                print(f"Evaluation EER: {eval_eer:.2f}%")
+                
+                # Save best model
+                if eval_eer < self.best_eer:
+                    self.best_eer = eval_eer
+                    print(f"New best EER: {eval_eer:.2f}%")
             
             # Update learning rate
             if self.scheduler:
