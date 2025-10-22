@@ -5,3 +5,5 @@ tqdm
 scikit-learn
 hydra-core
 omegaconf
+comet_ml
+soundfile
