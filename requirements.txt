@@ -7,3 +7,4 @@ hydra-core
 omegaconf
 comet_ml
 soundfile
+pandas
