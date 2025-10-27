@@ -1,3 +1,4 @@
+import os
 import torch
 from tqdm import tqdm
 from .evaluator import ASVspoofEvaluator
@@ -96,6 +97,7 @@ class ASVspoofTrainer:
                 if eval_eer < self.best_eer:
                     self.best_eer = eval_eer
                     print(f"New best EER: {eval_eer:.2f}%")
+                    self.save_checkpoint('best_model.pth')
             
             # Update learning rate
             if self.scheduler:
@@ -106,3 +108,19 @@ class ASVspoofTrainer:
                     self.writer.log_metric("learning_rate", lr, epoch=self.epoch)
         
         print("Training completed!")
+    
+    def save_checkpoint(self, filename):
+        """Save model checkpoint"""
+        save_dir = self.config.get('save_dir', 'saved')
+        os.makedirs(save_dir, exist_ok=True)
+        
+        checkpoint = {
+            'epoch': self.epoch,
+            'model_state_dict': self.model.state_dict(),
+            'optimizer_state_dict': self.optimizer.state_dict(),
+            'best_eer': self.best_eer
+        }
+        
+        filepath = os.path.join(save_dir, filename)
+        torch.save(checkpoint, filepath)
+        print(f"Checkpoint saved to {filepath}")
