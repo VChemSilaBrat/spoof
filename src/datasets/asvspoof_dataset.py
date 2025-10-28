@@ -7,18 +7,22 @@ from .data_utils import load_audio, compute_stft, pad_or_truncate
 class ASVspoofDataset(Dataset):
     """ASVspoof 2019 LA dataset"""
     
-    def __init__(self, data_dir, protocol_file, transform=None):
+    def __init__(self, data_dir, protocol_file, transform=None, cache_features=False):
         """
         Args:
             data_dir: Path to audio files
             protocol_file: Path to protocol file
             transform: Optional transform to be applied
+            cache_features: Whether to cache features in memory
         """
         self.data_dir = data_dir
         self.transform = transform
+        self.cache_features = cache_features
         self.samples = []
+        self.feature_cache = {}
         
         # Parse protocol file
+        print(f"Loading protocol from {protocol_file}...")
         with open(protocol_file, 'r') as f:
             for line in f:
                 parts = line.strip().split()
@@ -35,6 +39,8 @@ class ASVspoofDataset(Dataset):
                         'label': label_idx,
                         'speaker_id': speaker_id
                     })
+        
+        print(f"Loaded {len(self.samples)} samples")
     
     def __len__(self):
         return len(self.samples)
