@@ -108,6 +108,12 @@ class ASVspoofTrainer:
                     self.writer.log_metric("learning_rate", lr, epoch=self.epoch)
         
         print("Training completed!")
+        
+        # Upload best model to Comet.ml after training
+        if self.writer:
+            best_model_path = os.path.join(self.config.get('save_dir', 'saved'), 'best_model.pth')
+            if os.path.exists(best_model_path):
+                self.writer.log_model("best_model", best_model_path)
     
     def save_checkpoint(self, filename):
         """Save model checkpoint"""

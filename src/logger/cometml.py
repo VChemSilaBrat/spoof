@@ -45,6 +45,30 @@ class CometMLWriter:
         if self.experiment:
             self.experiment.log_metrics(metrics, step=step, epoch=epoch)
     
+    def log_model(self, model_name, file_path):
+        """
+        Log model checkpoint to Comet.ml
+        
+        Args:
+            model_name: Name for the model
+            file_path: Path to the model file (.pth, .pt, etc.)
+        """
+        if self.experiment:
+            self.experiment.log_model(model_name, file_path)
+            print(f"Model uploaded to Comet.ml: {model_name}")
+    
+    def log_asset(self, file_path, file_name=None):
+        """
+        Log arbitrary file as asset to Comet.ml
+        
+        Args:
+            file_path: Path to the file
+            file_name: Optional custom name for the file
+        """
+        if self.experiment:
+            self.experiment.log_asset(file_path, file_name=file_name)
+            print(f"Asset uploaded to Comet.ml: {file_name or file_path}")
+    
     def end(self):
         """End the experiment"""
         if self.experiment:

@@ -2,11 +2,16 @@
 
 Deep learning system for voice anti-spoofing detection using LightCNN architecture on the ASVspoof 2019 Logical Access (LA) dataset.
 
+## ⚠️ Project Status
+
+This is a research implementation of LightCNN for the ASVspoof 2019 challenge. The code is fully functional and ready for training and evaluation.
+
 ## 📋 Overview
 
 This project implements a countermeasure (CM) system for detecting spoofed audio samples using the LightCNN architecture with Max-Feature-Map (MFM) activation layers. The system is trained and evaluated on the ASVspoof 2019 LA dataset to distinguish between bonafide (genuine) and spoofed voice recordings.
 
 ### Key Features
+
 - **LightCNN Architecture**: Lightweight CNN with MFM layers for efficient feature learning
 - **STFT Features**: Short-Time Fourier Transform for audio preprocessing
 - **EER Metric**: Equal Error Rate as the primary evaluation metric
@@ -16,12 +21,14 @@ This project implements a countermeasure (CM) system for detecting spoofed audio
 ## 🏗️ Architecture
 
 ### Model Details
+
 - **Input**: STFT spectrograms (1 x 863 x 600)
 - **Layers**: 4 convolutional blocks with MFM activation
 - **Regularization**: Batch normalization + 0.75 dropout
 - **Output**: Binary classification (bonafide vs spoof)
 
 ### STFT Parameters
+
 - FFT size: 1724
 - Hop length: 172
 - Window length: 1724
@@ -33,7 +40,7 @@ This project implements a countermeasure (CM) system for detecting spoofed audio
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/LightCNN_ASVspoof2019.git
+git clone https://github.com/VChemSilaBrat/spoof
 cd LightCNN_ASVspoof2019
 
 # Create virtual environment
@@ -47,12 +54,14 @@ pip install -r requirements.txt
 ### Dataset Setup
 
 Download the ASVspoof 2019 LA dataset:
+
 ```bash
 # Download from https://datashare.ed.ac.uk/handle/10283/3336
 # Extract to 'LA' directory in project root
 ```
 
 Expected structure:
+
 ```
 LA/
 ├── ASVspoof2019_LA_train/flac/
@@ -67,6 +76,7 @@ LA/
 ### Comet.ml Setup
 
 Set up experiment tracking:
+
 ```bash
 # Set environment variables
 export COMET_API_KEY="your_api_key"
@@ -88,6 +98,11 @@ python3 evaluate.py
 ## 📊 Results
 
 The model achieves competitive performance on the ASVspoof 2019 LA dataset. Training metrics are logged to Comet.ml for visualization and analysis.
+
+### 🔗 Experiment Links
+
+- **Training Experiment**: [View on Comet.ml](https://www.comet.com/api/experiment/redirect?experimentKey=a4c2a80fe21d4eddaad5fb31a7f09843)
+- **Trained Model**: [Download from Comet.ml](https://www.comet.com/api/experiment/redirect?experimentKey=7608afaa9cf04ee4ab77b6d5c948d6f3) (Go to Assets tab)
 
 ## 📁 Project Structure
 
@@ -119,6 +134,7 @@ The model achieves competitive performance on the ASVspoof 2019 LA dataset. Trai
 ## 🔧 Configuration
 
 Edit `config.yaml` to customize:
+
 - Model hyperparameters
 - Training settings
 - Dataset paths
@@ -127,6 +143,7 @@ Edit `config.yaml` to customize:
 ## 📝 Citation
 
 If you use this code, please cite:
+
 ```bibtex
 @inproceedings{asvspoof2019,
   title={ASVspoof 2019: Future Horizons in Spoofed and Fake Audio Detection},
@@ -147,4 +164,3 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 ## 📧 Contact
 
 For questions or issues, please open an issue on GitHub.
-

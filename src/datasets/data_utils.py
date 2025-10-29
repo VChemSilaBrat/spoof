@@ -1,11 +1,20 @@
 import torch
 import torchaudio
+import soundfile as sf
 import numpy as np
 
 
 def load_audio(file_path, target_sr=16000):
     """Load audio file and resample if needed"""
-    waveform, sr = torchaudio.load(file_path)
+    # Use soundfile directly to avoid torchaudio backend issues
+    waveform, sr = sf.read(file_path)
+    
+    # Convert to torch tensor and add channel dimension
+    waveform = torch.from_numpy(waveform).float()
+    if waveform.dim() == 1:
+        waveform = waveform.unsqueeze(0)  # Add channel dimension
+    else:
+        waveform = waveform.T  # Transpose to (channels, samples)
     
     # Convert to mono if stereo
     if waveform.shape[0] > 1:

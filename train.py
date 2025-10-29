@@ -3,12 +3,14 @@
 Training script for ASVspoof LightCNN
 """
 import os
-import torch
 
+# Import comet_ml BEFORE torch for proper logging
+from src.logger.cometml import CometMLWriter
+
+import torch
 from src.model.lightcnn_original import LightCNNOriginal
 from src.datasets import ASVspoofDataset, get_train_loader, get_eval_loader
 from src.trainer.asvspoof_trainer import ASVspoofTrainer
-from src.logger.cometml import CometMLWriter
 from src.utils import set_random_seed
 
 
@@ -18,7 +20,7 @@ def main():
         'seed': 42,
         'epochs': 16,
         'batch_size': 16,
-        'num_workers': 4,
+        'num_workers': 0,  # Set to 0 on Windows to avoid multiprocessing issues
         'learning_rate': 0.0005,
         'scheduler_gamma': 0.98,
         'dropout_prob': 0.75,
